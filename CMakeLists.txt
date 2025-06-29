@@ -49,6 +49,8 @@ add_executable(wwidgt
         src/utils/process_str.h
         src/utils/variables.c
         src/utils/variables.h
+        src/utils/file_monitor.c
+        src/utils/file_monitor.h
 )
 
 # Include the necessary directories and link the libraries

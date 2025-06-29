@@ -29,7 +29,7 @@ GtkWidget* create_widget_from_tag(const char* tag_name, xmlNode* node) {
     if (strcmp(tag_name, "music_player") == 0) {
         return music_player();
     } else if (strcmp(tag_name, "clock") == 0) {
-        return clock_widget();
+        return clock_widget(node);
     } else if (strcmp(tag_name, "system_utilisation") == 0) {
         return system_utilisation();
     } else if (strcmp(tag_name, "profile_widget") == 0) {

@@ -3,6 +3,7 @@
 #include "utils/music_controls.h"
 #include "utils/css_loader.h"
 #include "utils/layout_parser.h"
+#include "utils/file_monitor.h"
 
 static void activate(GtkApplication* app, const void* _data) {
     GtkWindow* win = GTK_WINDOW(gtk_application_window_new(app));
@@ -21,6 +22,8 @@ static void activate(GtkApplication* app, const void* _data) {
 int main(const int argc, char **argv) {
     GtkApplication* app = gtk_application_new("com.def1de.wwidgt", G_APPLICATION_DEFAULT_FLAGS);
     g_signal_connect(app, "activate", G_CALLBACK(activate), NULL);
+
+    monitor_files(argv);
 
     const int status = g_application_run(G_APPLICATION(app), argc, argv);
     g_object_unref(app);
