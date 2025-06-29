@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "config_path.h"
+#include "variables.h"
 
 #include "../ui/music_player.h"
 #include "../ui/system_utilisation.h"
@@ -137,7 +138,22 @@ GtkWidget* load_layout() {
     }
 
     xmlNode* root = xmlDocGetRootElement(doc);
-    GtkWidget* ui = build_ui_from_node(root);
+    xmlNode* window_node = NULL;
+    xmlNode* variable_node = NULL;
+
+    for (xmlNode* node = root->children; node; node = node->next) {
+        if (node->type != XML_ELEMENT_NODE) continue;
+
+        if (xmlStrcmp(node->name, (const xmlChar*)"window") == 0) {
+            window_node = xmlCopyNode(node, 1);
+        } else if (xmlStrcmp(node->name, (const xmlChar*)"variables") == 0) {
+            variable_node = xmlCopyNode(node, 1);
+        }
+    }
+
+    parse_variables_node(variable_node);
+
+    GtkWidget* ui = build_ui_from_node(window_node);
     xmlFreeDoc(doc);
 
     return ui;

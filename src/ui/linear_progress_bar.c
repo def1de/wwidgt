@@ -14,7 +14,6 @@ static gboolean update_progress(gpointer user_data) {
         char buf[32];
         if (fgets(buf, sizeof(buf), fp)) {
             double val = atof(buf);
-            printf("Progress: %f\n", val);
             gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(data->widget), val/100.0);
         }
         pclose(fp);

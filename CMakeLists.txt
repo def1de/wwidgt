@@ -45,6 +45,10 @@ add_executable(wwidgt
         src/ui/linear_progress_bar.h
         src/utils/color.c
         src/utils/color.h
+        src/utils/process_str.c
+        src/utils/process_str.h
+        src/utils/variables.c
+        src/utils/variables.h
 )
 
 # Include the necessary directories and link the libraries
