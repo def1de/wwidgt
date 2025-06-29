@@ -7,10 +7,11 @@ set(CMAKE_CXX_STANDARD 14)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTK4 REQUIRED gtk4)
 pkg_check_modules(GTK4_LAYER_SHELL REQUIRED gtk4-layer-shell-0)
+pkg_check_modules(LIBXML2 REQUIRED libxml-2.0)
 #configure_file(style.css style.css COPYONLY)
 
 # Add the executable
-add_executable(gtk_layer_shell_test
+add_executable(wwidgt
         src/main.c
         src/utils/css_loader.h
         src/utils/css_loader.c
@@ -30,11 +31,27 @@ add_executable(gtk_layer_shell_test
         src/ui/power_options.h
         src/utils/config_path.c
         src/utils/config_path.h
+        src/utils/layout_parser.c
+        src/utils/layout_parser.h
+        src/ui/label.c
+        src/ui/label.h
+        src/ui/image.c
+        src/ui/image.h
+        src/ui/button.c
+        src/ui/button.h
+        src/ui/arc_progress_bar.c
+        src/ui/arc_progress_bar.h
+        src/ui/linear_progress_bar.c
+        src/ui/linear_progress_bar.h
+        src/utils/color.c
+        src/utils/color.h
 )
 
 # Include the necessary directories and link the libraries
-target_include_directories(gtk_layer_shell_test PRIVATE ${GTK4_INCLUDE_DIRS} ${GTK4_LAYER_SHELL_INCLUDE_DIRS})
-target_link_libraries(gtk_layer_shell_test PRIVATE curl ${GTK4_LIBRARIES} ${GTK4_LAYER_SHELL_LIBRARIES})
+target_include_directories(wwidgt PRIVATE ${GTK4_INCLUDE_DIRS} ${GTK4_LAYER_SHELL_INCLUDE_DIRS} ${LIBXML2_INCLUDE_DIRS})
+link_directories(${LIBXML2_LIBRARY_DIRS})
+
+target_link_libraries(wwidgt PRIVATE curl ${GTK4_LIBRARIES} ${GTK4_LAYER_SHELL_LIBRARIES} ${LIBXML2_LIBRARIES})
 
 # Add compiler flags
-target_compile_options(gtk_layer_shell_test PRIVATE ${GTK4_CFLAGS_OTHER} ${GTK4_LAYER_SHELL_CFLAGS_OTHER})
+target_compile_options(wwidgt PRIVATE ${GTK4_CFLAGS_OTHER} ${GTK4_LAYER_SHELL_CFLAGS_OTHER} ${LIBXML2_CFLAGS_OTHER})

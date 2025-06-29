@@ -99,6 +99,11 @@ GtkWidget* music_player() {
 
     gtk_box_append(GTK_BOX(vbox), button_box);
 
+    GtkWidget *progress_bar = gtk_progress_bar_new();
+    gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(progress_bar), 0.5);
+    gtk_progress_bar_set_show_text(GTK_PROGRESS_BAR(progress_bar), FALSE);
+    gtk_box_append(GTK_BOX(vbox), progress_bar);
+
     // Update labels every second
     LabelData* label_data = g_new(LabelData, 1);
     label_data->title_label = GTK_LABEL(title_label);

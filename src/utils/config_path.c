@@ -16,6 +16,6 @@ void get_config(char* buffer, const char* filename) {
         }
     }
     // Construct the full path to the file
-    printf("Accessing config file: %s/%s/%s\n", xdg_config_home, "custom_desktop_widget", filename);
-    snprintf(buffer, 1024, "%s/%s/%s", xdg_config_home, "custom_desktop_widget", filename);
+    printf("Accessing config file: %s/%s/%s\n", xdg_config_home, "wwidgt", filename);
+    snprintf(buffer, 1024, "%s/%s/%s", xdg_config_home, "wwidgt", filename);
 }
