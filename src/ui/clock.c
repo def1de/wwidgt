@@ -87,7 +87,6 @@ GtkWidget* clock_widget(xmlNode *node) {
 
         if (strcmp(name, "format") == 0) {
             config->format = strdup(replace_tokens(value));
-            printf("format: %s\n", config->format);
         } else if (strcmp(name, "update") == 0) {
             config->update_interval = atoi(value);
         } else if (strcmp(name, "class") == 0) {

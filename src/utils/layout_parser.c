@@ -5,11 +5,7 @@
 #include "config_path.h"
 #include "variables.h"
 
-#include "../ui/music_player.h"
-#include "../ui/system_utilisation.h"
 #include "../ui/clock.h"
-#include "../ui/profile_widget.h"
-#include "../ui/power_options.h"
 #include "../ui/label.h"
 #include "../ui/image.h"
 #include "../ui/button.h"
@@ -26,16 +22,8 @@
  * @return GtkWidget* A GTK widget created by the corresponding function.
  */
 GtkWidget* create_widget_from_tag(const char* tag_name, xmlNode* node) {
-    if (strcmp(tag_name, "music_player") == 0) {
-        return music_player();
-    } else if (strcmp(tag_name, "clock") == 0) {
+    if (strcmp(tag_name, "clock") == 0) {
         return clock_widget(node);
-    } else if (strcmp(tag_name, "system_utilisation") == 0) {
-        return system_utilisation();
-    } else if (strcmp(tag_name, "profile_widget") == 0) {
-        return profile_widget();
-    } else if (strcmp(tag_name, "power_options_widget") == 0) {
-        return power_options_widget();
     } else if (strcmp(tag_name, "label") == 0) {
         return label_widget(node);
     } else if (strcmp(tag_name, "image") == 0) {

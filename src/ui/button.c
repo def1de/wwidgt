@@ -1,5 +1,6 @@
 #include "button.h"
 #include "../utils/process_str.h"
+#include "../utils/logging.h"
 
 typedef struct {
     GtkWidget* widget;

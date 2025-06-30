@@ -16,6 +16,7 @@ extern int variable_count;
 
 /// Accessor for variable value
 const char* get_variable_value(const char* name);
+int set_variable_value(const char* name, const char* value);
 /// Free all allocated memory
 void free_variables(void);
 /// Parse <variables> node from layout

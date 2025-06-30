@@ -1,31 +1,34 @@
-#include "gtk4-layer-shell.h"
-#include <gtk/gtk.h>
-#include "utils/music_controls.h"
-#include "utils/css_loader.h"
-#include "utils/layout_parser.h"
-#include "utils/file_monitor.h"
+#include <stdio.h>
+#include <string.h>
 
-static void activate(GtkApplication* app, const void* _data) {
-    GtkWindow* win = GTK_WINDOW(gtk_application_window_new(app));
-    gtk_layer_init_for_window(win);
-    gtk_layer_set_layer(win, GTK_LAYER_SHELL_LAYER_BACKGROUND);
+#include "daemon.h"
+#include "ipc.h"
 
-    apply_css(); // load your CSS from file
 
-    GtkWidget* layout = load_layout();
-    if (layout) {
-        gtk_window_set_child(win, layout);
-        gtk_window_present(win);
+int main(int argc, char **argv) {
+    if (argc < 2) {
+        fprintf(stderr, "Usage: %s [daemon|log|variable get/set]\n", argv[0]);
     }
-}
 
-int main(const int argc, char **argv) {
-    GtkApplication* app = gtk_application_new("com.def1de.wwidgt", G_APPLICATION_DEFAULT_FLAGS);
-    g_signal_connect(app, "activate", G_CALLBACK(activate), NULL);
-
-    monitor_files(argv);
-
-    const int status = g_application_run(G_APPLICATION(app), argc, argv);
-    g_object_unref(app);
-    return status;
+    if (strcmp(argv[1], "daemon") == 0) {
+        printf("Running daemon\n");
+        run_daemon(argc, argv);
+        return 0;
+    } else if (strcmp(argv[1], "log") == 0) {
+        ipc_send_command("LOG_STREAM");
+    } else if (strcmp(argv[1], "variable") == 0 && argc >= 4) {
+        char command[256];
+        if (strcmp(argv[2], "get") == 0) {
+            snprintf(command, sizeof(command), "GET_VAR %s", argv[3]);
+            ipc_send_command(command);
+        } else if (strcmp(argv[2], "set") == 0 && argc == 5) {
+            snprintf(command, sizeof(command), "SET_VAR %s %s", argv[3], argv[4]);
+            ipc_send_command(command);
+        } else {
+            fprintf(stderr, "Invalid variable command\n");
+        }
+    } else {
+        fprintf(stderr, "Unknown command\n");
+        return 1;
+    }
 }

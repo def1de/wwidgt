@@ -1,9 +1,6 @@
 #ifndef CSS_LOADER_H
 #define CSS_LOADER_H
 
-#include <libgen.h>
-#include <string.h>
-#include <gio/gio.h>
 #include <gtk/gtk.h>
 
 extern GtkCssProvider* css_provider;

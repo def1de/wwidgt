@@ -1,6 +1,7 @@
 #include "variables.h"
 #include <stdlib.h>
 #include <string.h>
+#include "logging.h"
 
 Variable variables[MAX_VARIABLES];
 int variable_count = 0;
@@ -27,12 +28,12 @@ void parse_variables_node(xmlNode* node) {
     if (variable_count == 0) {
         fprintf(stderr, "No variables found in <variables> node.\n");
     } else {
-        printf("================\n");
-        printf("Collected %d variables from <variables> node.\n", variable_count);
+        log_printf("================\n");
+        log_printf("Collected %d variables from <variables> node.\n", variable_count);
         for (int i = 0; i < variable_count; ++i) {
-            printf("\tVariable %d: %s = %s\n", i+1, variables[i].name, variables[i].value);
+            log_printf("\tVariable %d: %s = %s\n", i+1, variables[i].name, variables[i].value);
         }
-        printf("================\n");
+        log_printf("================\n");
     }
 }
 
@@ -42,6 +43,19 @@ const char* get_variable_value(const char* name) {
             return variables[i].value;
     }
     return "";
+}
+
+int set_variable_value(const char* name, const char* value) {
+    for (int i = 0; i < variable_count; ++i) {
+        if (strcmp(variables[i].name, name) == 0) {
+            free(variables[i].value);
+            variables[i].value = strdup(value);
+            log_printf("Variable %s set to %s\n", name, value);
+            return 1;
+        }
+    }
+    log_printf("Variable %s wasn't initialised at the config\n", name);
+    return 0;
 }
 
 void free_variables(void) {

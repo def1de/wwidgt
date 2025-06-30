@@ -17,18 +17,10 @@ add_executable(wwidgt
         src/utils/css_loader.c
         src/utils/music_controls.h
         src/utils/music_controls.c
-        src/ui/music_player.h
-        src/ui/music_player.c
-        src/ui/system_utilisation.h
-        src/ui/system_utilisation.c
         src/utils/string_manip.h
         src/utils/string_manip.c
         src/ui/clock.c
         src/ui/clock.h
-        src/ui/profile_widget.c
-        src/ui/profile_widget.h
-        src/ui/power_options.c
-        src/ui/power_options.h
         src/utils/config_path.c
         src/utils/config_path.h
         src/utils/layout_parser.c
@@ -51,6 +43,12 @@ add_executable(wwidgt
         src/utils/variables.h
         src/utils/file_monitor.c
         src/utils/file_monitor.h
+        src/daemon.c
+        src/daemon.h
+        src/ipc.c
+        src/ipc.h
+        src/utils/logging.c
+        src/utils/logging.h
 )
 
 # Include the necessary directories and link the libraries
