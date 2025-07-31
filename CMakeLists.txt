@@ -57,3 +57,7 @@ target_link_libraries(wwidgt PRIVATE curl ${GTK4_LIBRARIES} ${GTK4_LAYER_SHELL_L
 
 # Add compiler flags
 target_compile_options(wwidgt PRIVATE ${GTK4_CFLAGS_OTHER} ${GTK4_LAYER_SHELL_CFLAGS_OTHER} ${LIBXML2_CFLAGS_OTHER})
+
+install(TARGETS wwidgt
+        RUNTIME DESTINATION bin
+)
