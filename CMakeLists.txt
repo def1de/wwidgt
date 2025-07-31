@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.30)
-project(gtk_layer_shell_test)
+project(wwidgt)
 
 set(CMAKE_CXX_STANDARD 14)
 

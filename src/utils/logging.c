@@ -13,6 +13,18 @@ static int log_client_count = 0;
 void add_log_client(int fd) {
     if (log_client_count < MAX_LOG_CLIENTS) {
         log_clients[log_client_count++] = fd;
+
+        // Send previous logs to the new client
+        FILE* log_file = fopen("/tmp/wwidgt.log", "r");
+        if (log_file) {
+            char line[MAX_LOG_MESSAGE];
+            while (fgets(line, sizeof(line), log_file)) {
+                send(fd, line, strlen(line), 0);
+            }
+            fclose(log_file);
+        } else {
+            perror("Failed to open log file");
+        }
     }
 }
 
@@ -49,6 +61,15 @@ void log_printf(const char* format, ...) {
     va_start(args, format);
     vsnprintf(buffer, sizeof(buffer), format, args);
     va_end(args);
+
+    // Append the log message to a file
+    FILE* log_file = fopen("/tmp/wwidgt.log", "a");
+    if (log_file) {
+        fprintf(log_file, "%s", buffer);
+        fclose(log_file);
+    } else {
+        perror("Failed to open log file");
+    }
 
     // Send to clients
     broadcast_log(buffer);
