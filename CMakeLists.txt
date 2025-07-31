@@ -15,8 +15,6 @@ add_executable(wwidgt
         src/main.c
         src/utils/css_loader.h
         src/utils/css_loader.c
-        src/utils/music_controls.h
-        src/utils/music_controls.c
         src/utils/string_manip.h
         src/utils/string_manip.c
         src/ui/clock.c
@@ -59,3 +57,7 @@ target_link_libraries(wwidgt PRIVATE curl ${GTK4_LIBRARIES} ${GTK4_LAYER_SHELL_L
 
 # Add compiler flags
 target_compile_options(wwidgt PRIVATE ${GTK4_CFLAGS_OTHER} ${GTK4_LAYER_SHELL_CFLAGS_OTHER} ${LIBXML2_CFLAGS_OTHER})
+
+install(TARGETS wwidgt
+        RUNTIME DESTINATION bin
+)
