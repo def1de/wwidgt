@@ -1,7 +1,6 @@
 #include "daemon.h"
 #include "gtk4-layer-shell.h"
 #include <gtk/gtk.h>
-#include "utils/music_controls.h"
 #include "utils/css_loader.h"
 #include "utils/layout_parser.h"
 #include "utils/file_monitor.h"

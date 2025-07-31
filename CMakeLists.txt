@@ -15,8 +15,6 @@ add_executable(wwidgt
         src/main.c
         src/utils/css_loader.h
         src/utils/css_loader.c
-        src/utils/music_controls.h
-        src/utils/music_controls.c
         src/utils/string_manip.h
         src/utils/string_manip.c
         src/ui/clock.c
