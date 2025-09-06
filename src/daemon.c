@@ -11,11 +11,10 @@
 static void activate(GtkApplication* app, const void* _data) {
     GtkWindow* win = GTK_WINDOW(gtk_application_window_new(app));
     gtk_layer_init_for_window(win);
-    gtk_layer_set_layer(win, GTK_LAYER_SHELL_LAYER_BACKGROUND);
     log_printf("Applying css\n");
     apply_css(); // load your CSS from file
     log_printf("Loading layout\n");
-    GtkWidget* layout = load_layout();
+    GtkWidget* layout = load_layout(win);
     if (layout) {
         gtk_window_set_child(win, layout);
         gtk_window_present(win);

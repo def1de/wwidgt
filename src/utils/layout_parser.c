@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include "config_path.h"
 #include "variables.h"
+#include "gtk4-layer-shell.h"
 
 #include "../ui/clock.h"
 #include "../ui/label.h"
@@ -116,7 +117,7 @@ static GtkWidget* build_ui_from_node(xmlNode* node) {
  * @param path Path to the layout file (e.g., "layout.xml").
  * @return GtkWidget* GTK widget tree, or NULL on error.
  */
-GtkWidget* load_layout() {
+GtkWidget* load_layout(GtkWindow* win) {
     char path[1024];
     get_config(path, "layout.xml");
     xmlDoc* doc = xmlReadFile(path, NULL, 0);
@@ -134,6 +135,36 @@ GtkWidget* load_layout() {
 
         if (xmlStrcmp(node->name, (const xmlChar*)"window") == 0) {
             window_node = xmlCopyNode(node, 1);
+            for (xmlAttr* attr = node->properties; attr; attr = attr->next) {
+                if (xmlStrcmp(attr->name, (const xmlChar*)"layer") == 0) {
+                    const char* layer = (const char*)attr->children->content;
+                    if (strcmp(layer, "background") == 0) {
+                        gtk_layer_set_layer(win, GTK_LAYER_SHELL_LAYER_BACKGROUND);
+                    } else if (strcmp(layer, "bottom") == 0) {
+                        gtk_layer_set_layer(win, GTK_LAYER_SHELL_LAYER_BOTTOM);
+                    } else if (strcmp(layer, "top") == 0) {
+                        gtk_layer_set_layer(win, GTK_LAYER_SHELL_LAYER_TOP);
+                    } else if (strcmp(layer, "overlay") == 0) {
+                        gtk_layer_set_layer(win, GTK_LAYER_SHELL_LAYER_OVERLAY);
+                    }
+                } else if (xmlStrcmp(attr->name, (const xmlChar*)"top") == 0) {
+                    const int margin = atoi((const char*)attr->children->content);
+                    gtk_layer_set_anchor(win, GTK_LAYER_SHELL_EDGE_TOP, TRUE);
+                    gtk_layer_set_margin(win, GTK_LAYER_SHELL_EDGE_TOP, margin);
+                } else if (xmlStrcmp(attr->name, (const xmlChar*)"bottom") == 0) {
+                    const int margin = atoi((const char*)attr->children->content);
+                    gtk_layer_set_anchor(win, GTK_LAYER_SHELL_EDGE_BOTTOM, TRUE);
+                    gtk_layer_set_margin(win, GTK_LAYER_SHELL_EDGE_BOTTOM, margin);
+                } else if (xmlStrcmp(attr->name, (const xmlChar*)"left") == 0) {
+                    const int margin = atoi((const char*)attr->children->content);
+                    gtk_layer_set_anchor(win, GTK_LAYER_SHELL_EDGE_LEFT, TRUE);
+                    gtk_layer_set_margin(win, GTK_LAYER_SHELL_EDGE_LEFT, margin);
+                } else if (xmlStrcmp(attr->name, (const xmlChar*)"right") == 0) {
+                    const int margin = atoi((const char*)attr->children->content);
+                    gtk_layer_set_anchor(win, GTK_LAYER_SHELL_EDGE_RIGHT, TRUE);
+                    gtk_layer_set_margin(win, GTK_LAYER_SHELL_EDGE_RIGHT, margin);
+                }
+            }
         } else if (xmlStrcmp(node->name, (const xmlChar*)"variables") == 0) {
             variable_node = xmlCopyNode(node, 1);
         }

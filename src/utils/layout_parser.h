@@ -11,7 +11,7 @@
  *
  * @return GtkWidget* The constructed GTK widget hierarchy, or NULL on failure.
  */
-GtkWidget* load_layout();
+GtkWidget* load_layout(GtkWindow* win);
 
 
 #endif //LAYOUT_PARSER_H
