@@ -63,6 +63,30 @@ static void apply_attributes(GtkWidget* widget, xmlNode* node) {
             gtk_widget_add_css_class(widget, value);
         } else if (strcmp(name, "id") == 0) {
             gtk_widget_set_name(widget, value);
+        } else if (strcmp(name, "halign") == 0) {
+            gtk_widget_set_hexpand(widget, true);
+            if (strcmp(value, "start") == 0) {
+                gtk_widget_set_halign(widget, GTK_ALIGN_START);
+            }
+            else if (strcmp(value, "center") == 0) {
+                printf("halign center\n");
+                gtk_widget_set_halign(widget, GTK_ALIGN_CENTER);
+            }
+            else if (strcmp(value, "end") == 0) {
+                gtk_widget_set_halign(widget, GTK_ALIGN_END);
+            }
+        } else if (strcmp(name, "valign") == 0) {
+            gtk_widget_set_hexpand(widget, true);
+            if (strcmp(value, "start") == 0) {
+                gtk_widget_set_valign(widget, GTK_ALIGN_START);
+            }
+            else if (strcmp(value, "center") == 0) {
+                printf("valign center\n");
+                gtk_widget_set_valign(widget, GTK_ALIGN_CENTER);
+            }
+            else if (strcmp(value, "end") == 0) {
+                gtk_widget_set_valign(widget, GTK_ALIGN_END);
+            }
         }
     }
 }
@@ -143,6 +167,7 @@ GtkWidget* load_layout(GtkWindow* win) {
                     } else if (strcmp(layer, "bottom") == 0) {
                         gtk_layer_set_layer(win, GTK_LAYER_SHELL_LAYER_BOTTOM);
                     } else if (strcmp(layer, "top") == 0) {
+                        gtk_layer_auto_exclusive_zone_enable (win);
                         gtk_layer_set_layer(win, GTK_LAYER_SHELL_LAYER_TOP);
                     } else if (strcmp(layer, "overlay") == 0) {
                         gtk_layer_set_layer(win, GTK_LAYER_SHELL_LAYER_OVERLAY);
